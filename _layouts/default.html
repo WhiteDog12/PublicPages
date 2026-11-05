@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.url == "/" %}{{ site.data.settings.title | escape }}{% else %}{{ page.title | escape }} | {{ site.data.settings.title | escape }}{% endif %}</title>
+  <meta name="description" content="{{ page.description | default: site.data.settings.description | escape }}">
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="site-title" href="{{ '/' | relative_url }}">{{ site.data.settings.title | escape }}</a>
+      <nav aria-label="Main">
+        {% assign nav_pages = site.pages | where_exp: "p", "p.nav_order" | sort: "nav_order" %}
+        {% for p in nav_pages %}
+        <a href="{{ p.url | relative_url }}"{% if p.url == page.url %} aria-current="page"{% endif %}>{{ p.title | escape }}</a>
+        {% endfor %}
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">
+    <h1>{{ page.title | escape }}</h1>
+    {{ content }}
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">{{ site.data.settings.footer | escape }}</div>
+  </footer>
+</body>
+</html>
